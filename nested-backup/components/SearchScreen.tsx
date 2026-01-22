@@ -22,7 +22,6 @@ const SearchScreen: React.FC = () => {
     localStorage.setItem("hhgttg_query", query);
   }, [query]);
 
-  // Wikipedia REST search + summary (no API key required)
   const handleSearch = useCallback(async () => {
     if (!query.trim()) return;
     setIsLoading(true);
