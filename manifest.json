@@ -1,4 +1,3 @@
-
 {
   "short_name": "The Guide",
   "name": "The Hitchhiker's Guide to the Galaxy",
@@ -7,20 +6,24 @@
     {
       "src": "https://www.gstatic.com/images/branding/product/1x/google_gemini_32dp.png",
       "type": "image/png",
-      "sizes": "32x32"
+      "sizes": "32x32",
+      "purpose": "any"
     },
     {
       "src": "https://www.gstatic.com/images/branding/product/1x/google_gemini_192dp.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "maskable any"
     },
     {
       "src": "https://www.gstatic.com/images/branding/product/1x/google_gemini_512dp.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "maskable any"
     }
   ],
-  "start_url": "/",
+  "start_url": "/TheHitchhikrersGuide.io/",
+  "scope": "/TheHitchhikrersGuide.io/",
   "display": "standalone",
   "display_override": ["fullscreen", "standalone", "minimal-ui"],
   "theme_color": "#000000",
