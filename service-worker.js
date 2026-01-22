@@ -1,20 +1,12 @@
+const REPO_NAME = '/TheHitchhikrersGuide.io/';
+const CACHE_NAME = 'the-guide-cache-v7';
 
-const CACHE_NAME = 'the-guide-cache-v6';
+// Only cache compiled assets and public files
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/index.tsx',
-  '/App.tsx',
-  '/types.ts',
-  '/manifest.json',
-  '/components/HomeScreen.tsx',
-  '/components/SearchScreen.tsx',
-  '/components/MediaLibraryScreen.tsx',
-  '/components/WarningScreen.tsx',
-  '/components/OnScreenKeyboard.tsx',
-  '/components/WikipediaPopup.tsx',
-  '/components/VideoPlayer.tsx',
-  '/components/SystemScreen.tsx',
+  REPO_NAME,
+  `${REPO_NAME}index.html`,
+  `${REPO_NAME}manifest.json`,
+  // External assets
   'https://fonts.cdnfonts.com/css/conthrax',
   'https://www.gstatic.com/images/branding/product/1x/google_gemini_32dp.png',
   'https://www.gstatic.com/images/branding/product/1x/google_gemini_192dp.png',
@@ -22,45 +14,42 @@ const urlsToCache = [
 ];
 
 self.addEventListener('install', event => {
-  // skipWaiting() forces the waiting service worker to become the active service worker.
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Opened cache v6 (Stable)');
-        return cache.addAll(urlsToCache);
-      })
+    caches.open(CACHE_NAME).then(cache => {
+      console.log('PWA: Precaching production assets');
+      return cache.addAll(urlsToCache);
+    })
   );
 });
 
 self.addEventListener('activate', event => {
-  // Claim all clients immediately so the first visit is controlled.
   event.waitUntil(self.clients.claim());
-  
-  const cacheWhitelist = [CACHE_NAME];
+  // Clean up old versions
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            console.log('Deleting old cache:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
+    caches.keys().then(keys => Promise.all(
+      keys.map(key => {
+        if (key !== CACHE_NAME) return caches.delete(key);
+      })
+    ))
   );
 });
 
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Cache hit - return response
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
-      })
+    caches.match(event.request).then(response => {
+      // Return cached file OR fetch from network and cache it (Stale-While-Revalidate)
+      return response || fetch(event.request).then(networkResponse => {
+        return caches.open(CACHE_NAME).then(cache => {
+          // Don't cache data/API calls, just static assets
+          if (event.request.url.startsWith('http')) {
+            cache.put(event.request, networkResponse.clone());
+          }
+          return networkResponse;
+        });
+      });
+    }).catch(() => {
+      // Optional: Return a custom offline page here
+    })
   );
 });
