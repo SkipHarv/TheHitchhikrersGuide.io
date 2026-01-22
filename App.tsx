@@ -17,6 +17,19 @@ const App: React.FC = () => {
     return Screen.Home;
   });
 
+  // 1. Service Worker Registration for PWA Installation
+  useEffect(() => {
+    if ('serviceWorker' in navigator && import.meta.env.PROD) {
+      window.addEventListener('load', () => {
+        // Use the full repo path for the service worker
+        navigator.serviceWorker.register('/TheHitchhikrersGuide.io/service-worker.js')
+          .then(reg => console.log('SW registered:', reg))
+          .catch(err => console.error('SW registration failed:', err));
+      });
+    }
+  }, []);
+
+  // CRT Effects Configuration
   useEffect(() => {
     const intensity = localStorage.getItem('hhgttg_crt_intensity') || '0.15';
     const speed = localStorage.getItem('hhgttg_crt_speed') || '10';
@@ -35,9 +48,7 @@ const App: React.FC = () => {
   useEffect(() => {
     if (isStarted) return;
     const handleBootKey = (e: KeyboardEvent) => {
-      if (e.key === 'Enter') {
-        handleStart();
-      }
+      if (e.key === 'Enter') handleStart();
     };
     window.addEventListener('keydown', handleBootKey);
     return () => window.removeEventListener('keydown', handleBootKey);
@@ -53,12 +64,14 @@ const App: React.FC = () => {
     });
   }, []);
 
+  // Prevent context menu (Guide aesthetic)
   useEffect(() => {
     const preventContextMenu = (e: MouseEvent) => e.preventDefault();
     document.addEventListener('contextmenu', preventContextMenu);
     return () => document.removeEventListener('contextmenu', preventContextMenu);
   }, []);
 
+  // Global Keyboard Navigation
   useEffect(() => {
     if (!isStarted) return;
     const handleGlobalKeyDown = (event: KeyboardEvent) => {
@@ -68,11 +81,14 @@ const App: React.FC = () => {
         const num = match[0];
         event.stopImmediatePropagation();
         event.preventDefault();
-        if (num === '1') changeScreen(Screen.Home);
-        else if (num === '2') changeScreen(Screen.Search);
-        else if (num === '3') changeScreen(Screen.MediaLibrary);
-        else if (num === '4') changeScreen(Screen.Warning);
-        else if (num === '5') changeScreen(Screen.System);
+        const screenMap: Record<string, Screen> = {
+          '1': Screen.Home,
+          '2': Screen.Search,
+          '3': Screen.MediaLibrary,
+          '4': Screen.Warning,
+          '5': Screen.System
+        };
+        if (screenMap[num]) changeScreen(screenMap[num]);
       }
     };
     window.addEventListener('keydown', handleGlobalKeyDown, true);
@@ -80,25 +96,26 @@ const App: React.FC = () => {
   }, [changeScreen, isStarted]);
   
   const renderScreenComponent = () => {
+    const props = { key: currentScreen };
     switch (currentScreen) {
-      case Screen.Home: return <HomeScreen key="home" />;
-      case Screen.Search: return <SearchScreen key="search" />;
-      case Screen.MediaLibrary: return <MediaLibraryScreen key="media" />;
-      case Screen.Warning: return <WarningScreen key="warning" />;
-      case Screen.System: return <SystemScreen key="system" />;
-      default: return <HomeScreen key="home-default" />;
+      case Screen.Home: return <HomeScreen {...props} />;
+      case Screen.Search: return <SearchScreen {...props} />;
+      case Screen.MediaLibrary: return <MediaLibraryScreen {...props} />;
+      case Screen.Warning: return <WarningScreen {...props} />;
+      case Screen.System: return <SystemScreen {...props} />;
+      default: return <HomeScreen {...props} />;
     }
   };
 
   const getScreenName = (screen: Screen) => {
-    switch (screen) {
-      case Screen.Home: return "CORE_LOGIC";
-      case Screen.Search: return "SUB_ETHER_SEARCH";
-      case Screen.MediaLibrary: return "MEDIA_VAULT";
-      case Screen.Warning: return "CRITICAL_HAZARD";
-      case Screen.System: return "KERNEL_SHELL";
-      default: return "UNKNOWN";
-    }
+    const names: Record<Screen, string> = {
+      [Screen.Home]: "CORE_LOGIC",
+      [Screen.Search]: "SUB_ETHER_SEARCH",
+      [Screen.MediaLibrary]: "MEDIA_VAULT",
+      [Screen.Warning]: "CRITICAL_HAZARD",
+      [Screen.System]: "KERNEL_SHELL"
+    };
+    return names[screen] || "UNKNOWN";
   };
 
   if (!isStarted) {
@@ -109,12 +126,6 @@ const App: React.FC = () => {
         <h1 className="splash-title">The Hitchhiker's Guide to the Galaxy</h1>
         <p className="publisher-text">Megadodo Publications of Ursa Minor</p>
         <p className="halt-text">[ SYSTEM HALTED. PRESS ENTER OR CLICK TO BOOT ]</p>
-        <button className="start-button" aria-label="Boot System">
-          <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="50" cy="55" r="32" />
-            <ellipse cx="50" cy="55" rx="46" ry="12" transform="rotate(-30 50 55)" />
-          </svg>
-        </button>
       </div>
     );
   }
