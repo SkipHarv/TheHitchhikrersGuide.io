@@ -1,20 +1,21 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+// https://vite.dev
 export default defineConfig({
   plugins: [react()],
-  base: '/TheHitchhikrersGuide.io/', // CRITICAL: Matches your repo name
-  },
+  // This must match your GitHub repository name exactly
+  base: '/TheHitchhikrersGuide.io/', 
   server: {
     port: 5173,
     strictPort: true,
-    host: true, // Allow local network access
-    open: true, // Automatically open browser on start
+    host: true, // Allows access from other devices on your network
+    open: true, 
   },
   build: {
     target: 'esnext',
-    outDir: 'dist',
+    outDir: 'dist', // Matches the "deploy" script in your package.json
     assetsDir: 'assets',
     sourcemap: false,
   }
-});
+})
