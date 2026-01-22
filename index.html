@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en" class="notranslate" translate="no">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="google" content="notranslate" />
+    <title>The Hitchhiker's Guide to the Galaxy</title>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" type="image/png" href="https://www.gstatic.com/images/branding/product/1x/google_gemini_32dp.png" />
+    <style>
+      @import url('https://fonts.cdnfonts.com/css/conthrax');
+      @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&display=swap');
+      
+      :root {
+        --green: #22c55e;
+        --green-glow: rgba(34, 197, 94, 0.4);
+        --blue: #3b82f6;
+        --red: #ef4444;
+        --yellow: #facc15;
+        --gray-200: #e5e7eb;
+        --gray-300: #d1d5db;
+        --gray-400: #9ca3af;
+        --gray-900: #0a0a0a;
+        --terminal-bg: #050505;
+        --crt-intensity: 0.15;
+        --crt-speed: 10s;
+      }
+
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+      }
+
+      body {
+        background-color: #000;
+        color: var(--gray-200);
+        font-family: 'Conthrax', sans-serif;
+        margin: 0;
+        overflow: hidden;
+        width: 100vw;
+        height: 100vh;
+        -webkit-font-smoothing: antialiased;
+        user-select: none;
+        -webkit-user-select: none;
+      }
+
+      #root {
+        width: 100%;
+        height: 100%;
+      }
+
+      .main-wrapper {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        background: #000;
+        overflow: hidden;
+      }
+
+      .crt-global-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: repeating-linear-gradient(
+          0deg,
+          rgba(0, 0, 0, 0.4) 0px,
+          rgba(0, 0, 0, 0.4) 1px,
+          transparent 1px,
+          transparent 2px
+        );
+        pointer-events: none;
+        z-index: 9999;
+        opacity: var(--crt-intensity);
+      }
+
+      .crt-global-scanline {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 80px;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(34, 197, 94, 0.12),
+          transparent
+        );
+        pointer-events: none;
+        z-index: 10000;
+        opacity: var(--crt-intensity);
+        animation: scanline-scroll var(--crt-speed) linear infinite;
+      }
+
+      .status-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1.1rem;
+        background: rgba(10, 10, 10, 0.98);
+        border-bottom: 1px solid #222;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 0.5rem;
+        font-size: 0.55rem;
+        font-family: 'Fira Code', monospace;
+        color: var(--green);
+        z-index: 3000;
+      }
+
+      @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+      .animate-fade-in { animation: fade-in 0.2s linear forwards; }
+      
+      @keyframes cursor-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+      .cursor-blink { animation: cursor-blink 1s step-start infinite; }
+
+      .block-cursor {
+        display: inline-block;
+        width: 0.5em;
+        height: 0.9em;
+        background-color: currentColor;
+        vertical-align: middle;
+        margin-left: 2px;
+      }
+
+      @keyframes scanline-scroll {
+        0% { transform: translateY(-100vh); }
+        100% { transform: translateY(100vh); }
+      }
+      
+      .screen {
+        width: 100vw;
+        height: 100vh;
+        background-color: #000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .splash-screen { text-align: center; }
+      .splash-title {
+        font-size: 1.2rem;
+        color: var(--green);
+        margin-bottom: 0.1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+      .publisher-text {
+        font-size: 0.45rem;
+        color: var(--green);
+        opacity: 0.6;
+        margin-bottom: 0.75rem;
+        font-family: 'Fira Code', monospace;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .halt-text {
+        color: var(--green);
+        opacity: 0.7;
+        margin-bottom: 1rem;
+        font-family: 'Fira Code', monospace;
+        font-size: 0.5rem;
+      }
+
+      .start-button {
+        background: transparent;
+        border: 1px solid var(--green);
+        color: var(--green);
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      .dont-panic-text {
+        font-family: 'Fredoka', sans-serif;
+        font-size: 7.875rem;
+        font-weight: 700;
+        line-height: 0.85;
+        color: var(--red);
+        text-transform: uppercase;
+        text-shadow: 3px 3px 0 var(--yellow);
+      }
+
+      .search-input {
+        width: 95%;
+        background: #050505;
+        border: 1px solid #333;
+        padding: 0.4rem;
+        font-family: 'Fira Code', monospace;
+        font-size: 0.9rem;
+        color: var(--green);
+        margin-bottom: 0.6rem;
+        border-radius: 3px;
+        min-height: 1.8rem;
+      }
+
+      .keyboard { display: flex; flex-direction: column; gap: 2px; }
+      .keyboard-row { display: flex; justify-content: center; gap: 2px; }
+      .keyboard-key {
+        min-width: 2rem;
+        height: 2rem;
+        background: #111;
+        border: 1px solid var(--green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Fira Code', monospace;
+        color: var(--green);
+        border-radius: 2px;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+      .keyboard-key.focused { background: var(--green); color: #000; border-color: #fff; }
+      .keyboard-key.special { font-size: 0.45rem; min-width: 3.5rem; }
+      .keyboard-key.space { min-width: 7rem; font-size: 0.5rem; }
+
+      .wiki-popup-overlay { position: fixed; inset: 0; background: #000; z-index: 2000; }
+      .wiki-popup-content { width: 100%; height: 100%; display: flex; flex-direction: column; padding: 1.2rem 0.5rem 0.4rem 0.5rem; }
+      .wiki-title { color: var(--green); font-size: 1rem; border-bottom: 1px solid var(--green); margin: 0 0 0.4rem 0; }
+      .wiki-body { flex: 1; overflow-y: auto; font-family: 'Fira Code', monospace; font-size: 0.65rem; line-height: 1.3; color: var(--gray-300); }
+
+      .media-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 2px; margin: 0; }
+      .media-item {
+        padding: 0.35rem 0.5rem;
+        border: 1px solid #222;
+        background: #0a0a0a;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-family: 'Fira Code', monospace;
+        font-size: 0.6rem;
+        border-radius: 2px;
+        min-height: 1.6rem;
+      }
+      .media-item.selected { border: 1px solid var(--green); background: #0d1a0d; color: var(--green); }
+      .media-meta { font-size: 0.45rem; color: #555; }
+
+      .video-player-container { position: fixed; inset: 0; background: #000; z-index: 2000; display: flex; align-items: center; justify-content: center; }
+      video { width: 480px; height: 320px; object-fit: contain; background: #000; }
+
+      .terminal-output {
+        width: 100%; height: 100%; background: #000; padding: 0.5rem;
+        font-family: 'Fira Code', monospace; font-size: 0.55rem; line-height: 1.1;
+        color: var(--green); overflow-y: auto;
+      }
+
+      .crt-calibration-panel { background: #111; border: 1px solid #333; padding: 0.4rem; margin-top: 0.5rem; width: 100%; }
+      .crt-calibration-title { color: var(--yellow); font-size: 0.5rem; margin-bottom: 0.3rem; text-transform: uppercase; }
+      .calibration-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.3rem; }
+      .calibration-label { font-size: 0.5rem; color: var(--green); width: 60px; }
+      .calibration-slider { flex: 1; height: 4px; background: #333; outline: none; -webkit-appearance: none; }
+      .calibration-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 10px; height: 10px; background: var(--green); cursor: pointer; border-radius: 0; }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
+    "@google/genai": "https://esm.sh/@google/genai@^1.37.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
