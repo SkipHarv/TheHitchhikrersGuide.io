@@ -1,0 +1,30 @@
+
+{
+  "short_name": "The Guide",
+  "name": "The Hitchhiker's Guide to the Galaxy",
+  "description": "Your friendly guide to media and information in the universe.",
+  "icons": [
+    {
+      "src": "https://www.gstatic.com/images/branding/product/1x/google_gemini_32dp.png",
+      "type": "image/png",
+      "sizes": "32x32"
+    },
+    {
+      "src": "https://www.gstatic.com/images/branding/product/1x/google_gemini_192dp.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://www.gstatic.com/images/branding/product/1x/google_gemini_512dp.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "display_override": ["fullscreen", "standalone", "minimal-ui"],
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "orientation": "landscape",
+  "prefer_related_applications": false
+}
