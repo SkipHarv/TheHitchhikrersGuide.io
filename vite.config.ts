@@ -1,11 +1,10 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
-  base: '/TheGuide/',
-  // ...other config
-  },
   plugins: [react()],
+  base: '/TheHitchhikrersGuide.io/', // CRITICAL: Matches your repo name
+  },
   server: {
     port: 5173,
     strictPort: true,
