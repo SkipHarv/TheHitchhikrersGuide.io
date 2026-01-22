@@ -20,5 +20,9 @@
     "@vitejs/plugin-react": "^4.3.4",
     "typescript": "^5.7.2",
     "vite": "^6.0.3"
-  }
+  },
+  "name": "The-Hitchhikers-Guide-to-the-Galaxy",
+  "version": "0.1.0",
+  "homepage": "https://github.com/SkipHarv/TheGuide",
+  ...
 }
