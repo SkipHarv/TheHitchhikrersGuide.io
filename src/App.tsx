@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Screen } from './types.ts';
-import HomeScreen from './components/HomeScreen.tsx';
-import SearchScreen from './components/SearchScreen.tsx';
-import MediaLibraryScreen from './components/MediaLibraryScreen.tsx';
-import WarningScreen from './components/WarningScreen.tsx';
-import SystemScreen from './components/SystemScreen.tsx';
+import { Screen } from './types';
+import HomeScreen from './components/HomeScreen';
+import SearchScreen from './components/SearchScreen';
+import MediaLibraryScreen from './components/MediaLibraryScreen';
+import WarningScreen from './components/WarningScreen';
+import SystemScreen from './components/SystemScreen';
 
 const App: React.FC = () => {
   const [isStarted, setIsStarted] = useState(false);
