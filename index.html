@@ -2,29 +2,23 @@
 <html lang="en" class="notranslate" translate="no">
   <head>
     <meta charset="UTF-8" />
-    <!-- 1. ENHANCED VIEWPORT: Prevents unwanted zooming on mobile inputs -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <meta name="google" content="notranslate" />
     <title>The Hitchhiker's Guide to the Galaxy</title>
 
-    <!-- 2. CRITICAL: Updated manifest path for GitHub Pages -->
-    <link rel="manifest" href="/TheHitchhikrersGuide.io/manifest.json">
+    <!-- 1. CORRECTED MANIFEST: Use relative path so Vite handles the build correctly -->
+    <link rel="manifest" href="./manifest.json">
     
     <meta name="theme-color" content="#000000" />
-    
-    <!-- 3. PWA STANDARDS FOR 2026 -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="The Guide">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
-    <!-- 4. APPLE TOUCH ICON: Required for iOS PWA installation -->
     <link rel="apple-touch-icon" href="https://www.gstatic.com/images/branding/product/1x/google_gemini_192dp.png">
-    
     <link rel="icon" type="image/png" href="https://www.gstatic.com/images/branding/product/1x/google_gemini_32dp.png" />
     
     <style>
-      /* 5. OPTIMIZED FONT LOADING */
       @import url('https://fonts.cdnfonts.com/css/conthrax');
       @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&display=swap');
       @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@700&display=swap');
@@ -47,7 +41,6 @@
       * {
         box-sizing: border-box;
         -webkit-tap-highlight-color: transparent;
-        /* Improved touch handling for 2026 mobile browsers */
         touch-action: pan-x pan-y; 
       }
 
@@ -59,38 +52,19 @@
         overflow: hidden;
         width: 100vw;
         height: 100vh;
-        /* Critical for PWA immersion */
         height: 100dvh; 
         -webkit-font-smoothing: antialiased;
         user-select: none;
         -webkit-user-select: none;
       }
 
-           #root {
-        width: 100%;
-        height: 100%;
-        height: 100dvh; /* 2026 standard for mobile browser toolbars */
-      }
+      #root { width: 100%; height: 100%; height: 100dvh; }
+      .main-wrapper { position: relative; width: 100%; height: 100%; background: #000; overflow: hidden; }
 
-      .main-wrapper {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        background: #000;
-        overflow: hidden;
-      }
-
-      /* CRT OVERLAYS: Optimized for performance */
       .crt-global-overlay {
         position: fixed;
         inset: 0;
-        background: repeating-linear-gradient(
-          0deg,
-          rgba(0, 0, 0, 0.4) 0px,
-          rgba(0, 0, 0, 0.4) 1px,
-          transparent 1px,
-          transparent 2px
-        );
+        background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0px, rgba(0, 0, 0, 0.4) 1px, transparent 1px, transparent 2px);
         pointer-events: none;
         z-index: 9999;
         opacity: var(--crt-intensity);
@@ -100,12 +74,7 @@
         position: fixed;
         inset: 0;
         height: 80px;
-        background: linear-gradient(
-          to bottom,
-          transparent,
-          rgba(34, 197, 94, 0.12),
-          transparent
-        );
+        background: linear-gradient(to bottom, transparent, rgba(34, 197, 94, 0.12), transparent);
         pointer-events: none;
         z-index: 10000;
         opacity: var(--crt-intensity);
@@ -124,55 +93,43 @@
         justify-content: space-between;
         align-items: center;
         padding: 0 0.5rem;
-        padding-top: env(safe-area-inset-top); /* Supports iPhone notches */
+        padding-top: env(safe-area-inset-top);
         font-size: 0.55rem;
         font-family: 'Fira Code', monospace;
         color: var(--green);
         z-index: 3000;
       }
 
-      @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-      .animate-fade-in { animation: fade-in 0.2s linear forwards; }
-      
-      @keyframes cursor-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
-      .cursor-blink { animation: cursor-blink 1s step-start infinite; }
-
       @keyframes scanline-scroll {
         0% { transform: translateY(-100vh); }
         100% { transform: translateY(100vh); }
       }
       
-      .screen {
-        width: 100%;
-        height: 100%;
-        background-color: #000;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 0.5rem;
-        position: relative;
-        overflow: hidden;
-      }
-
       .dont-panic-text {
         font-family: 'Fredoka', sans-serif;
-        font-size: clamp(3rem, 15vw, 7.875rem); /* Responsive sizing */
+        font-size: clamp(3rem, 15vw, 7.875rem);
         font-weight: 700;
-        line-height: 0.85;
         color: var(--red);
         text-transform: uppercase;
         text-shadow: 3px 3px 0 var(--yellow);
         text-align: center;
       }
-
-      /* ... Rest of your UI classes remain the same ... */
-
     </style>
 
+    <!-- 2. ADDED IMPORTMAP: Required for esm.sh to resolve React in 2026 -->
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh",
+        "react-dom": "https://esm.sh",
+        "react-dom/client": "https://esm.sh/client"
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
+    <!-- 3. CORRECTED PATH: Use relative path for Vite build -->
     <script type="module" src="./src/main.tsx"></script>
   </body>
 </html>
