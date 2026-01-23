@@ -38,6 +38,5 @@ export default defineConfig({
   base: '/TheHitchhikrersGuide.io/', // Correctly maps paths for GitHub Pages
   build: {
     outDir: 'dist',
-    copyPublicDir: true,
   }
 })
