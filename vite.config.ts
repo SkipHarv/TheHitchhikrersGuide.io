@@ -6,11 +6,11 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt',
       injectRegister: false, // Disable auto-registration since we register manually in App.tsx
-      strategies: 'generateSW', // Generate a simple service worker (or use 'injectManifest' for custom)
-      workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}']
+      strategies: 'generateSW', // Generate SW but we won't use it (custom SW in App.tsx)
+      devOptions: {
+        enabled: false // Disable in dev
       },
       manifest: {
         name: "The Hitchhiker's Guide to the Galaxy",
@@ -38,5 +38,6 @@ export default defineConfig({
   base: '/TheHitchhikrersGuide.io/', // Correctly maps paths for GitHub Pages
   build: {
     outDir: 'dist',
+    copyPublicDir: true,
   }
 })
