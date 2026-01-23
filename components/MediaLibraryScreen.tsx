@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { MediaItem } from '../types.ts';
-import VideoPlayer from './VideoPlayer.tsx';
+import { MediaItem } from '../types';
+import VideoPlayer from './VideoPlayer';
 
 const DB_NAME = 'GuideDB';
 const STORE_NAME = 'Settings';
