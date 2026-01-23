@@ -24,12 +24,14 @@ jobs:
         with:
           node-version: 20
      
-
       - name: Install dependencies
-        run: npm install
+        run: npm ci # Performs a clean install based on package-lock.json
 
       - name: Build
-        run: npm run build # This runs your 'tsc && vite build'
+        run: |
+          chmod +x node_modules/.bin/vite
+          npm run build
+
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
