@@ -8,7 +8,6 @@
     <title>The Hitchhiker's Guide to the Galaxy</title>
 
     <!-- 2. CRITICAL: Updated manifest path for GitHub Pages -->
-    <link rel="stylesheet" href="/index.css">
     
     <meta name="theme-color" content="#000000" />
     
@@ -170,25 +169,9 @@
 
     </style>
 
-    <!-- 1. CORRECTED IMPORTMAP FOR PRODUCTION -->
-    <script type="importmap">
-    {
-      "imports": {
-        "react": "https://esm.sh",
-        "react-dom": "https://esm.sh",
-        "react-dom/client": "https://esm.sh/client",
-        "@google/genai": "https://esm.sh"
-      }
-    }
-    </script>
-
-    <!-- 2. CORRECTED ASSET PATHS FOR GITHUB PAGES -->
-    <link rel="stylesheet" href="/index.css">
   </head>
   <body>
     <div id="root"></div>
-    
-    <!-- 3. CORRECTED ENTRY POINT PATH -->
-    <script type="module" src="/src/main.tsx">
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

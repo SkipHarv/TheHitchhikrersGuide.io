@@ -6,23 +6,30 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: 'autoUpdate', // Automatically updates the app when you deploy
+      registerType: 'autoUpdate',
+      injectRegister: false, // Disable auto-registration since we register manually in App.tsx
+      strategies: 'generateSW', // Generate a simple service worker (or use 'injectManifest' for custom)
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}']
+      },
       manifest: {
         name: "The Hitchhiker's Guide to the Galaxy",
         short_name: "The Guide",
         theme_color: "#000000",
-        start_url: "/TheHitchhikrersGuide.io/", // Matches your base path
+        start_url: "/TheHitchhikrersGuide.io/",
+        scope: "/TheHitchhikrersGuide.io/",
         icons: [
           {
-            src: 'pwa-192x192.png',
+            src: 'https://www.gstatic.com/images/branding/product/1x/google_gemini_192dp.png',
             sizes: '192x192',
-            type: 'image/png'
+            type: 'image/png',
+            purpose: 'any maskable'
           },
           {
-            src: 'pwa-512x512.png',
+            src: 'https://www.gstatic.com/images/branding/product/1x/google_gemini_512dp.png',
             sizes: '512x512',
             type: 'image/png',
-            purpose: 'any maskable' // Required for modern PWA standards
+            purpose: 'any maskable'
           }
         ]
       }
