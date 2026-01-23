@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
-import OnScreenKeyboard from './OnScreenKeyboard.tsx';
-import WikipediaPopup from './WikipediaPopup.tsx';
-import { WikiArticle } from '../types.ts';
+import OnScreenKeyboard from './OnScreenKeyboard';
+import WikipediaPopup from './WikipediaPopup';
+import { WikiArticle } from '../types';
 import { GoogleGenAI } from "@google/genai";
 
 const SearchScreen: React.FC = () => {
